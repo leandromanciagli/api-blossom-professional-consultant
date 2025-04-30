@@ -26,6 +26,7 @@ require_once plugin_dir_path(__FILE__) . 'create-table-mp-paids.php';
 // require_once plugin_dir_path(__FILE__) . 'includes/utils.php';
 
 require_once plugin_dir_path(__FILE__) . 'src/controller/MercadoPagoController.php';
+require_once plugin_dir_path(__FILE__) . 'src/controller/NewsletterController.php';
 
 register_activation_hook(__FILE__, 'crear_tabla_pagos');
 
@@ -46,6 +47,12 @@ add_action('rest_api_init', function () {
   register_rest_route('api', '/webhook', [
     'methods'  => 'POST',
     'callback' => 'mp_webhook_callback',
+    'permission_callback' => '__return_true',
+  ]);
+
+  register_rest_route('api/newsletter', '/create-subscriptor', [
+    'methods'  => 'POST',
+    'callback' => 'create_newsletter_subscriptor',
     'permission_callback' => '__return_true',
   ]);
   
